@@ -1,4 +1,6 @@
 import { debug } from "@actions/core";
+import * as http from "@actions/http-client";
+import { BearerCredentialHandler } from "@actions/http-client/lib/auth";
 
 type Success = {
     success: true;
@@ -23,25 +25,36 @@ async function get(
 ): Promise<AccessResult> {
     const url = `${endpoint}/${owner}/${repository}/${branch}`;
     debug(`Fetching ${url}`);
-    const response = await fetch(url, {
-        headers: {
-            "User-Agent": `vrt-key-action/${owner}/${repository}/${branch}`,
-        },
-    });
-    if (!response.ok) {
-        const result = await response.json();
+    try {
+        const client = new http.HttpClient(
+            `vrt-key-action/${owner}/${repository}/${branch}`,
+        );
+        const response = await client.get(url);
+        if (
+            !response.message.statusCode ||
+            response.message.statusCode < 200 ||
+            response.message.statusCode >= 300
+        ) {
+            const result = JSON.parse(await response.readBody());
+            return {
+                success: false,
+                error:
+                    getErrorMessage(result) ??
+                    `${response.message.statusCode} ${response.message.statusMessage}`,
+            };
+        }
+
+        const data = await response.readBody();
+        return {
+            success: true,
+            data,
+        };
+    } catch (_error) {
         return {
             success: false,
-            error:
-                getErrorMessage(result) ??
-                `${response.status} ${response.statusText}`,
+            error: "Unknown error",
         };
     }
-    const data = await response.text();
-    return {
-        success: true,
-        data,
-    };
 }
 
 async function put(
@@ -52,30 +65,38 @@ async function put(
     token: string,
     data: string,
 ): Promise<AccessResult> {
-    const response = await fetch(
-        `${endpoint}/${owner}/${repository}/${branch}`,
-        {
-            method: "PUT",
-            headers: {
-                "User-Agent": `vrt-key-action/${owner}/${repository}/${branch}`,
-                authorization: `Bearer ${token}`,
-            },
-            body: data,
-        },
+    const client = new http.HttpClient(
+        `vrt-key-action/${owner}/${repository}/${branch}`,
+        [new BearerCredentialHandler(token)],
     );
-    const result = await response.json();
-    if (!response.ok) {
+    try {
+        const response = await client.put(
+            `${endpoint}/${owner}/${repository}/${branch}`,
+            data,
+        );
+        const result = JSON.parse(await response.readBody());
+        if (
+            !response.message.statusCode ||
+            response.message.statusCode < 200 ||
+            response.message.statusCode >= 300
+        ) {
+            return {
+                success: false,
+                error:
+                    getErrorMessage(result) ??
+                    `${response.message.statusCode} ${response.message.statusMessage}`,
+            };
+        }
+        return {
+            success: true,
+            data,
+        };
+    } catch (_error) {
         return {
             success: false,
-            error:
-                getErrorMessage(result) ??
-                `${response.status} ${response.statusText}`,
+            error: "Unknown error",
         };
     }
-    return {
-        success: true,
-        data,
-    };
 }
 
 function getErrorMessage(result: unknown): string | undefined {

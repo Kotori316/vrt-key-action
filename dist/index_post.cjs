@@ -296,7 +296,7 @@ var require_tunnel = __commonJS({
     "use strict";
     var net = require("net");
     var tls = require("tls");
-    var http = require("http");
+    var http2 = require("http");
     var https = require("https");
     var events = require("events");
     var assert = require("assert");
@@ -307,12 +307,12 @@ var require_tunnel = __commonJS({
     exports2.httpsOverHttps = httpsOverHttps;
     function httpOverHttp(options) {
       var agent = new TunnelingAgent(options);
-      agent.request = http.request;
+      agent.request = http2.request;
       return agent;
     }
     function httpsOverHttp(options) {
       var agent = new TunnelingAgent(options);
-      agent.request = http.request;
+      agent.request = http2.request;
       agent.createSocket = createSecureSocket;
       agent.defaultPort = 443;
       return agent;
@@ -333,7 +333,7 @@ var require_tunnel = __commonJS({
       var self = this;
       self.options = options || {};
       self.proxyOptions = self.options.proxy || {};
-      self.maxSockets = self.options.maxSockets || http.Agent.defaultMaxSockets;
+      self.maxSockets = self.options.maxSockets || http2.Agent.defaultMaxSockets;
       self.requests = [];
       self.sockets = [];
       self.on("free", function onFree(socket, host, port, localAddress) {
@@ -6864,7 +6864,7 @@ var require_client = __commonJS({
     "use strict";
     var assert = require("assert");
     var net = require("net");
-    var http = require("http");
+    var http2 = require("http");
     var { pipeline } = require("stream");
     var util = require_util();
     var timers = require_timers();
@@ -6937,11 +6937,11 @@ var require_client = __commonJS({
       kHTTP2CopyHeaders,
       kHTTP1BuildRequest
     } = require_symbols();
-    var http2;
+    var http22;
     try {
-      http2 = require("http2");
+      http22 = require("http2");
     } catch {
-      http2 = { constants: {} };
+      http22 = { constants: {} };
     }
     var {
       constants: {
@@ -6953,7 +6953,7 @@ var require_client = __commonJS({
         HTTP2_HEADER_EXPECT,
         HTTP2_HEADER_STATUS
       }
-    } = http2;
+    } = http22;
     var h2ExperimentalWarned = false;
     var FastBuffer = Buffer[Symbol.species];
     var kClosedResolve = Symbol("kClosedResolve");
@@ -7086,7 +7086,7 @@ var require_client = __commonJS({
         this[kConnector] = connect2;
         this[kSocket] = null;
         this[kPipelining] = pipelining != null ? pipelining : 1;
-        this[kMaxHeadersSize] = maxHeaderSize || http.maxHeaderSize;
+        this[kMaxHeadersSize] = maxHeaderSize || http2.maxHeaderSize;
         this[kKeepAliveDefaultTimeout] = keepAliveTimeout == null ? 4e3 : keepAliveTimeout;
         this[kKeepAliveMaxTimeout] = keepAliveMaxTimeout == null ? 6e5 : keepAliveMaxTimeout;
         this[kKeepAliveTimeoutThreshold] = keepAliveTimeoutThreshold == null ? 1e3 : keepAliveTimeoutThreshold;
@@ -7794,7 +7794,7 @@ var require_client = __commonJS({
               code: "UNDICI-H2"
             });
           }
-          const session = http2.connect(client[kUrl], {
+          const session = http22.connect(client[kUrl], {
             createConnection: () => socket,
             peerMaxConcurrentStreams: client[kHTTP2SessionState].maxConcurrentStreams
           });
@@ -13046,7 +13046,7 @@ var require_fetch = __commonJS({
         this.emit("terminated", error);
       }
     };
-    function fetch2(input, init = {}) {
+    function fetch(input, init = {}) {
       webidl.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
       const p = createDeferredPromise();
       let requestObject;
@@ -13976,7 +13976,7 @@ var require_fetch = __commonJS({
       }
     }
     module2.exports = {
-      fetch: fetch2,
+      fetch,
       Fetch,
       fetching,
       finalizeAndReportTiming
@@ -17232,7 +17232,7 @@ var require_undici = __commonJS({
     module2.exports.getGlobalDispatcher = getGlobalDispatcher;
     if (util.nodeMajor > 16 || util.nodeMajor === 16 && util.nodeMinor >= 8) {
       let fetchImpl = null;
-      module2.exports.fetch = async function fetch2(resource) {
+      module2.exports.fetch = async function fetch(resource) {
         if (!fetchImpl) {
           fetchImpl = require_fetch().fetch;
         }
@@ -17344,7 +17344,7 @@ var require_lib = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.HttpClient = exports2.isHttps = exports2.HttpClientResponse = exports2.HttpClientError = exports2.getProxyUrl = exports2.MediaTypes = exports2.Headers = exports2.HttpCodes = void 0;
-    var http = __importStar(require("http"));
+    var http2 = __importStar(require("http"));
     var https = __importStar(require("https"));
     var pm = __importStar(require_proxy());
     var tunnel = __importStar(require_tunnel2());
@@ -17454,7 +17454,7 @@ var require_lib = __commonJS({
       return parsedUrl.protocol === "https:";
     }
     exports2.isHttps = isHttps;
-    var HttpClient = class {
+    var HttpClient2 = class {
       constructor(userAgent, handlers, requestOptions) {
         this._ignoreSslError = false;
         this._allowRedirects = true;
@@ -17736,7 +17736,7 @@ var require_lib = __commonJS({
         const info2 = {};
         info2.parsedUrl = requestUrl;
         const usingSsl = info2.parsedUrl.protocol === "https:";
-        info2.httpModule = usingSsl ? https : http;
+        info2.httpModule = usingSsl ? https : http2;
         const defaultPort = usingSsl ? 443 : 80;
         info2.options = {};
         info2.options.host = info2.parsedUrl.hostname;
@@ -17784,7 +17784,7 @@ var require_lib = __commonJS({
         const usingSsl = parsedUrl.protocol === "https:";
         let maxSockets = 100;
         if (this.requestOptions) {
-          maxSockets = this.requestOptions.maxSockets || http.globalAgent.maxSockets;
+          maxSockets = this.requestOptions.maxSockets || http2.globalAgent.maxSockets;
         }
         if (proxyUrl && proxyUrl.hostname) {
           const agentOptions = {
@@ -17806,7 +17806,7 @@ var require_lib = __commonJS({
         }
         if (!agent) {
           const options = { keepAlive: this._keepAlive, maxSockets };
-          agent = usingSsl ? new https.Agent(options) : new http.Agent(options);
+          agent = usingSsl ? new https.Agent(options) : new http2.Agent(options);
           this._agent = agent;
         }
         if (usingSsl && this._ignoreSslError) {
@@ -17898,7 +17898,7 @@ var require_lib = __commonJS({
         });
       }
     };
-    exports2.HttpClient = HttpClient;
+    exports2.HttpClient = HttpClient2;
     var lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => (c[k.toLowerCase()] = obj[k], c), {});
   }
 });
@@ -17958,7 +17958,7 @@ var require_auth = __commonJS({
       }
     };
     exports2.BasicCredentialHandler = BasicCredentialHandler;
-    var BearerCredentialHandler = class {
+    var BearerCredentialHandler2 = class {
       constructor(token) {
         this.token = token;
       }
@@ -17980,7 +17980,7 @@ var require_auth = __commonJS({
         });
       }
     };
-    exports2.BearerCredentialHandler = BearerCredentialHandler;
+    exports2.BearerCredentialHandler = BearerCredentialHandler2;
     var PersonalAccessTokenCredentialHandler = class {
       constructor(token) {
         this.token = token;
@@ -20707,16 +20707,16 @@ var require_dist_node5 = __commonJS({
       let headers = {};
       let status;
       let url;
-      let { fetch: fetch2 } = globalThis;
+      let { fetch } = globalThis;
       if ((_b = requestOptions.request) == null ? void 0 : _b.fetch) {
-        fetch2 = requestOptions.request.fetch;
+        fetch = requestOptions.request.fetch;
       }
-      if (!fetch2) {
+      if (!fetch) {
         throw new Error(
           "fetch is not set. Please pass a fetch implementation as new Octokit({ request: { fetch }}). Learn more at https://github.com/octokit/octokit.js/#fetch-missing"
         );
       }
-      return fetch2(requestOptions.url, {
+      return fetch(requestOptions.url, {
         method: requestOptions.method,
         body: requestOptions.body,
         redirect: (_c = requestOptions.request) == null ? void 0 : _c.redirect,
@@ -23875,6 +23875,8 @@ var import_github = __toESM(require_github(), 1);
 
 // src/vrtKey.ts
 var import_core = __toESM(require_core(), 1);
+var http = __toESM(require_lib(), 1);
+var import_auth = __toESM(require_auth(), 1);
 var vrtKey_default = {
   get,
   put
@@ -23882,47 +23884,57 @@ var vrtKey_default = {
 async function get(endpoint, owner, repository, branch) {
   const url = `${endpoint}/${owner}/${repository}/${branch}`;
   (0, import_core.debug)(`Fetching ${url}`);
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": `vrt-key-action/${owner}/${repository}/${branch}`
+  try {
+    const client = new http.HttpClient(
+      `vrt-key-action/${owner}/${repository}/${branch}`
+    );
+    const response = await client.get(url);
+    if (!response.message.statusCode || response.message.statusCode < 200 || response.message.statusCode >= 300) {
+      const result = JSON.parse(await response.readBody());
+      return {
+        success: false,
+        error: getErrorMessage(result) ?? `${response.message.statusCode} ${response.message.statusMessage}`
+      };
     }
-  });
-  if (!response.ok) {
-    const result = await response.json();
+    const data = await response.readBody();
+    return {
+      success: true,
+      data
+    };
+  } catch (_error) {
     return {
       success: false,
-      error: getErrorMessage(result) ?? `${response.status} ${response.statusText}`
+      error: "Unknown error"
     };
   }
-  const data = await response.text();
-  return {
-    success: true,
-    data
-  };
 }
 async function put(endpoint, owner, repository, branch, token, data) {
-  const response = await fetch(
-    `${endpoint}/${owner}/${repository}/${branch}`,
-    {
-      method: "PUT",
-      headers: {
-        "User-Agent": `vrt-key-action/${owner}/${repository}/${branch}`,
-        authorization: `Bearer ${token}`
-      },
-      body: data
-    }
+  const client = new http.HttpClient(
+    `vrt-key-action/${owner}/${repository}/${branch}`,
+    [new import_auth.BearerCredentialHandler(token)]
   );
-  const result = await response.json();
-  if (!response.ok) {
+  try {
+    const response = await client.put(
+      `${endpoint}/${owner}/${repository}/${branch}`,
+      data
+    );
+    const result = JSON.parse(await response.readBody());
+    if (!response.message.statusCode || response.message.statusCode < 200 || response.message.statusCode >= 300) {
+      return {
+        success: false,
+        error: getErrorMessage(result) ?? `${response.message.statusCode} ${response.message.statusMessage}`
+      };
+    }
+    return {
+      success: true,
+      data
+    };
+  } catch (_error) {
     return {
       success: false,
-      error: getErrorMessage(result) ?? `${response.status} ${response.statusText}`
+      error: "Unknown error"
     };
   }
-  return {
-    success: true,
-    data
-  };
 }
 function getErrorMessage(result) {
   if (!result) {
