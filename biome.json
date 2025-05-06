@@ -27,7 +27,6 @@
       },
       "style": {
         "noNamespace": "error",
-        "noNamespaceImport": "error",
         "noYodaExpression": "error",
         "useConsistentArrayType": {
           "level": "error",
