@@ -70,7 +70,8 @@
         "useShorthandFunctionType": "error"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": "error",
+        "noAwaitInLoop": "error"
       }
     }
   },

@@ -3,8 +3,8 @@
   "type": "module",
   "version": "v2.1.0",
   "scripts": {
-    "format": "npx @biomejs/biome check --write --unsafe",
-    "ci": "npx @biomejs/biome ci && tsc --noEmit",
+    "format": "npx @biomejs/biome@beta check --write --unsafe",
+    "ci": "npx @biomejs/biome@beta ci && tsc --noEmit",
     "package:main": "npx esbuild src/index.ts --bundle --platform=node --sourcemap --outfile=dist/index.cjs",
     "package:post": "npx esbuild src/index_post.ts --bundle --platform=node --sourcemap --outfile=dist/index_post.cjs",
     "bundle": "npm run package:main && npm run package:post",
