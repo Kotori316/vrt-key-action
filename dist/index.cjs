@@ -19693,7 +19693,7 @@ var require_core = __commonJS({
       return inputs.map((input) => input.trim());
     }
     exports2.getMultilineInput = getMultilineInput;
-    function getBooleanInput(name, options) {
+    function getBooleanInput2(name, options) {
       const trueValue = ["true", "True", "TRUE"];
       const falseValue = ["false", "False", "FALSE"];
       const val = getInput2(name, options);
@@ -19704,7 +19704,7 @@ var require_core = __commonJS({
       throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}
 Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
-    exports2.getBooleanInput = getBooleanInput;
+    exports2.getBooleanInput = getBooleanInput2;
     function setOutput2(name, value) {
       const filePath = process.env["GITHUB_OUTPUT"] || "";
       if (filePath) {
@@ -19735,10 +19735,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       (0, command_1.issueCommand)("error", (0, utils_1.toCommandProperties)(properties), message instanceof Error ? message.toString() : message);
     }
     exports2.error = error;
-    function warning(message, properties = {}) {
+    function warning2(message, properties = {}) {
       (0, command_1.issueCommand)("warning", (0, utils_1.toCommandProperties)(properties), message instanceof Error ? message.toString() : message);
     }
-    exports2.warning = warning;
+    exports2.warning = warning2;
     function notice(message, properties = {}) {
       (0, command_1.issueCommand)("notice", (0, utils_1.toCommandProperties)(properties), message instanceof Error ? message.toString() : message);
     }
@@ -23954,6 +23954,14 @@ function getErrorMessage(result) {
 
 // src/getMain.ts
 async function run() {
+  const saveKey = (0, import_core2.getBooleanInput)("save-key");
+  if (saveKey) {
+    if (!process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN) {
+      (0, import_core2.warning)(
+        "You might forget to set the `id-token` permission of this job."
+      );
+    }
+  }
   const endpoint = (0, import_core2.getInput)("endpoint");
   (0, import_core2.debug)(`Detected endpoint: ${endpoint}`);
   if (!endpoint) {

@@ -1,15 +1,26 @@
 import {
     debug,
+    getBooleanInput,
     getInput,
     info,
     saveState,
     setFailed,
     setOutput,
+    warning,
 } from "@actions/core";
 import { context } from "@actions/github";
 import vrtKey from "./vrtKey";
 
 export async function run(): Promise<void> {
+    const saveKey = getBooleanInput("save-key");
+    if (saveKey) {
+        // Check the token request token, given when enough permission available
+        if (!process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN) {
+            warning(
+                "You might forget to set the `id-token` permission of this job.",
+            );
+        }
+    }
     const endpoint = getInput("endpoint");
     debug(`Detected endpoint: ${endpoint}`);
     if (!endpoint) {
