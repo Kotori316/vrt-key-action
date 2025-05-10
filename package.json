@@ -1,7 +1,7 @@
 {
   "name": "vrt-key-action",
   "type": "module",
-  "version": "v2.1.0",
+  "version": "v2.2.0",
   "scripts": {
     "format": "npx @biomejs/biome@beta check --write --unsafe",
     "ci": "npx @biomejs/biome@beta ci && tsc --noEmit",
