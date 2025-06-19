@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0-beta.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
   "files": {
     "includes": [
       "**/*.ts",
@@ -47,10 +47,8 @@
           }
         },
         "useLiteralEnumMembers": "error",
-        "noCommaOperator": "error",
         "useNodejsImportProtocol": "error",
         "useAsConstAssertion": "error",
-        "useNumericLiterals": "error",
         "useEnumInitializers": "error",
         "useSelfClosingElements": "error",
         "useConst": "error",
@@ -63,7 +61,6 @@
         "noParameterAssign": "error",
         "noNonNullAssertion": "error",
         "useDefaultParameterLast": "error",
-        "noArguments": "error",
         "useImportType": "error",
         "useExportType": "error",
         "noUselessElse": "error",
@@ -72,6 +69,11 @@
       "nursery": {
         "useSortedClasses": "error",
         "noAwaitInLoop": "error"
+      },
+      "complexity": {
+        "noCommaOperator": "error",
+        "useNumericLiterals": "error",
+        "noArguments": "error"
       }
     }
   },

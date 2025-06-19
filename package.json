@@ -3,8 +3,8 @@
   "type": "module",
   "version": "v2.2.0",
   "scripts": {
-    "format": "npx @biomejs/biome@beta check --write --unsafe",
-    "ci": "npx @biomejs/biome@beta ci && tsc --noEmit",
+    "format": "npx @biomejs/biome check --write --unsafe",
+    "ci": "npx @biomejs/biome ci && tsc --noEmit",
     "package:main": "npx esbuild src/index.ts --bundle --platform=node --sourcemap --outfile=dist/index.cjs",
     "package:post": "npx esbuild src/index_post.ts --bundle --platform=node --sourcemap --outfile=dist/index_post.cjs",
     "bundle": "npm run package:main && npm run package:post",
@@ -17,7 +17,7 @@
     "@actions/http-client": "^2.2.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.0-beta.2",
+    "@biomejs/biome": "^2.0.0",
     "@github/local-action": "^3.2.1",
     "@types/node": "^20.17",
     "esbuild": "^0.25.3",
