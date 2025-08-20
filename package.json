@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
-    "@github/local-action": "^3.2.1",
+    "@github/local-action": "^5.1.0",
     "@types/node": "^20.17",
     "esbuild": "^0.25.9",
     "typescript": "^5.9.2",
