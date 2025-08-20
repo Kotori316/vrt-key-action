@@ -19,19 +19,19 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
     "@github/local-action": "^5.1.0",
-    "@types/node": "^20.17",
+    "@types/node": "^24.3",
     "esbuild": "^0.25.9",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
   "volta": {
-    "node": "20.19.2"
+    "node": "24.6.0"
   },
   "exports": {
     ".": "./dist/index.js"
   },
   "engines": {
-    "node": "^20"
+    "node": "^24"
   },
   "license": "MIT"
 }

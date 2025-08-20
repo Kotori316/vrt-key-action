@@ -25,7 +25,7 @@ outputs:
     description: 'The key for VRT, which is for current execution'
 
 runs:
-  using: node20
+  using: node24
   main: 'dist/index.cjs'
   post: 'dist/index_post.cjs'
   post-if: 'success()'
