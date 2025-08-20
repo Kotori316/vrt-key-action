@@ -17,11 +17,11 @@
     "@actions/http-client": "^2.2.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0",
+    "@biomejs/biome": "^2.2.0",
     "@github/local-action": "^3.2.1",
     "@types/node": "^20.17",
-    "esbuild": "^0.25.5",
-    "typescript": "^5.8.3",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
   "volta": {
