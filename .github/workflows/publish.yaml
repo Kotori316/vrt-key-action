@@ -16,9 +16,9 @@ jobs:
 
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@v5'
+        uses: 'actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd' # v5.0.1
       - name: 'Publish'
         id: 'publish'
-        uses: 'actions/publish-immutable-action@v0.0.4'
+        uses: 'actions/publish-immutable-action@4bc8754ffc40f27910afb20287dbbbb675a4e978' # v0.0.4
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
