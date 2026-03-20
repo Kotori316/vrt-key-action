@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: daily
     open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
     ignore:
       # Stay on the current Node major (LTS line); bump @types/node major when you move engines/volta.
       - dependency-name: '@types/node'
@@ -16,3 +18,5 @@ updates:
     schedule:
       interval: daily
     open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
