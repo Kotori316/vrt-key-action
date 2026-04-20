@@ -21,7 +21,7 @@
     "@github/local-action": "^7.0.1",
     "@types/node": "^24.12",
     "esbuild": "^0.28.0",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.4"
   },
   "volta": {
