@@ -22,7 +22,7 @@
     "@types/node": "^24.13",
     "esbuild": "^0.28.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "volta": {
     "node": "24.21.0"
