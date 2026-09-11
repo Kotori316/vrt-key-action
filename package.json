@@ -20,7 +20,7 @@
     "@biomejs/biome": "^2.5.7",
     "@github/local-action": "^7.0.1",
     "@types/node": "^24.13",
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
   },
