@@ -17,7 +17,7 @@
     "@actions/http-client": "^4.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.8",
+    "@biomejs/biome": "^2.6.9",
     "@github/local-action": "^7.0.1",
     "@types/node": "^24.19",
     "esbuild": "^0.28.2",
